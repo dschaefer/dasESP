@@ -11,6 +11,7 @@
 	<modules>
 		<module>ESP8266-feature</module>
 		<module>ESP-target</module>
+		<module>ESP-repo</module>
 	</modules>
 	<build>
 		<plugins>

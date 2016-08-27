@@ -2,7 +2,7 @@
 <feature
       id="ca.cdtdoug.dasESP.ESP8266.feature"
       label="ESP8266 Tools"
-      version="1.0.0.qualifier">
+      version="1.4.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
