@@ -44,6 +44,9 @@
 										<move file="tarfiles/ESP8266_RTOS_SDK-${sdkVersion}"
 											tofile="tarfiles/ESP8266_RTOS_SDK" />
 										<delete file="tarfiles/pax_global_header" failonerror="false" />
+										<get
+											src="https://github.com/esp8266/esp8266-wiki/raw/master/libs/libhal.a"
+											dest="tarfiles/ESP8266_RTOS_SDK/lib" />
 									</target>
 								</configuration>
 							</execution>
