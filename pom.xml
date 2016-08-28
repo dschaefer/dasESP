@@ -9,9 +9,10 @@
 		<tycho-version>0.26.0</tycho-version>
 	</properties>
 	<modules>
-		<module>ESP8266-feature</module>
+		<module>ESP8266-rtos</module>
 		<module>ESP-target</module>
 		<module>ESP-repo</module>
+		<module>ESP8266-rtos-macosx</module>
 	</modules>
 	<build>
 		<plugins>

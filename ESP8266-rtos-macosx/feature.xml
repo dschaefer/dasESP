@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="ca.cdtdoug.dasESP.ESP8266.feature"
-      label="ESP8266 Tools"
-      version="1.4.0.qualifier">
+      id="ca.cdtdoug.dasESP.ESP8266.rtos.macosx"
+      label="ESP8266 RTOS Tools MacOSX"
+      version="1.0.0.qualifier"
+      os="macosx">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
