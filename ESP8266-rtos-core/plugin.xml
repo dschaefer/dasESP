@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.remote.core.remoteServices">
+      <connectionType
+            canAdd="true"
+            canEdit="true"
+            canRemove="true"
+            id="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
+            name="ESP8266 Serial">
+      </connectionType>
+      <connectionService
+            connectionTypeId="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
+            factory="org.eclipse.remote.serial.core.SerialPortConnection$Factory"
+            service="org.eclipse.remote.serial.core.ISerialPortService">
+      </connectionService>
+      <connectionService
+            connectionTypeId="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
+            factory="org.eclipse.remote.serial.core.SerialPortConnection$Factory"
+            service="org.eclipse.remote.core.IRemoteCommandShellService">
+      </connectionService>
+      <connectionService
+            connectionTypeId="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
+            factory="org.eclipse.remote.serial.core.SerialPortConnection$Factory"
+            service="org.eclipse.remote.core.IRemoteConnectionPropertyService">
+      </connectionService>
+   </extension>
+
+</plugin>

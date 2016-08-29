@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ESP8266 RTOS UI Plugin
+Bundle-SymbolicName: ca.cdtdoug.dasESP.ESP8266.rtos.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: ca.cdtdoug.dasesp.esp8266.rtos.ui.internal.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.remote.core;bundle-version="2.1.0",
+ org.eclipse.remote.ui;bundle-version="2.0.0",
+ org.eclipse.remote.serial.core;bundle-version="1.0.0",
+ org.eclipse.remote.serial.ui;bundle-version="1.0.0",
+ ca.cdtdoug.dasESP.ESP8266.rtos.core;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
