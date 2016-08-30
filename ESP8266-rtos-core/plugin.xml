@@ -46,5 +46,22 @@
             class="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266CMakeToolChainProvider">
       </provider>
    </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266LaunchConfigurationDelegate"
+            id="ca.cdtdoug.dasESP.ESP8266.rtos.core.launchConfigurationType"
+            modes="run"
+            name="ESP8266">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.launchbar.core.launchBarContributions">
+      <configProvider
+            class="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266LaunchConfigurationProvider"
+            descriptorType="org.eclipse.cdt.cmake.core.descriptorType"
+            priority="10">
+      </configProvider>
+   </extension>
 
 </plugin>

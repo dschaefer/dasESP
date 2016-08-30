@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.cdt.native.serial;bundle-version="1.0.0",
  org.eclipse.cdt.core;bundle-version="6.1.0",
  org.eclipse.cdt.build.gcc.core;bundle-version="1.0.0",
- org.eclipse.cdt.cmake.core;bundle-version="1.0.0"
+ org.eclipse.cdt.cmake.core;bundle-version="1.0.0",
+ org.eclipse.debug.core;bundle-version="3.10.100"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: ca.cdtdoug.dasesp.esp8266.core.internal;x-friends:="ca.cdtdoug.dasESP.ESP8266.rtos.ui"
