@@ -13,7 +13,7 @@
 		<module>ESP-target</module>
 		<module>ESP8266-rtos</module>
 		<module>ESP8266-rtos-macosx</module>
-		<module>ESP8266-rtos-core</module>
+ 		<module>ESP8266-rtos-core</module>
 		<module>ESP8266-rtos-ui</module>
 	</modules>
 	<build>

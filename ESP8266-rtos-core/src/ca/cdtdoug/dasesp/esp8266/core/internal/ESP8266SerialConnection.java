@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) 2016 QNX Software Systems and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package ca.cdtdoug.dasesp.esp8266.core.internal;
 
 import java.io.IOException;
@@ -47,7 +54,7 @@ public class ESP8266SerialConnection implements IRemoteConnectionPropertyService
 	@Override
 	public String getProperty(String key) {
 		if (IRemoteConnection.OS_NAME_PROPERTY.equals(key)) {
-			return "rtos";
+			return "RTOS";
 		} else if (IRemoteConnection.OS_ARCH_PROPERTY.equals(key)) {
 			return "ESP8266";
 		} else {

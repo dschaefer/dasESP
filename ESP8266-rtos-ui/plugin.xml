@@ -9,5 +9,12 @@
             service="org.eclipse.remote.ui.IRemoteUIConnectionService">
       </connectionTypeService>
    </extension>
+   <extension
+         point="org.eclipse.launchbar.ui.launchTargetTypeUI">
+      <launchTargetTypeUI
+            id="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
+            labelProvider="ca.cdtdoug.dasesp.esp8266.rtos.ui.internal.ESP8266LabelProvider">
+      </launchTargetTypeUI>
+   </extension>
 
 </plugin>

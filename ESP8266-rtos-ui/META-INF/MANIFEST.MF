@@ -10,6 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.remote.ui;bundle-version="2.0.0",
  org.eclipse.remote.serial.core;bundle-version="1.0.0",
  org.eclipse.remote.serial.ui;bundle-version="1.0.0",
+ org.eclipse.launchbar.core;bundle-version="2.0.1",
+ org.eclipse.launchbar.ui;bundle-version="2.0.1",
  ca.cdtdoug.dasESP.ESP8266.rtos.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

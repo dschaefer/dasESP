@@ -26,5 +26,25 @@
             service="org.eclipse.remote.core.IRemoteConnectionPropertyService">
       </connectionService>
    </extension>
+   <extension
+         point="org.eclipse.launchbar.core.launchTargetTypes">
+      <launchTargetType
+            id="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
+            provider="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266LaunchTargetProvider">
+      </launchTargetType>
+   </extension>
+   <extension
+         point="org.eclipse.cdt.core.toolChainProvider">
+      <provider
+            class="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266ToolChainProvider"
+            id="ca.cdtdoug.dasESP.ESP8266.rtos.core.toolChainProvider">
+      </provider>
+   </extension>
+   <extension
+         point="org.eclipse.cdt.cmake.core.toolChainProvider">
+      <provider
+            class="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266CMakeToolChainProvider">
+      </provider>
+   </extension>
 
 </plugin>
