@@ -8,7 +8,6 @@
 package ca.cdtdoug.dasesp.esp8266.core.internal;
 
 import org.eclipse.launchbar.core.target.ILaunchTarget;
-import org.eclipse.launchbar.core.target.ILaunchTargetManager;
 import org.eclipse.launchbar.core.target.ILaunchTargetWorkingCopy;
 import org.eclipse.launchbar.remote.core.RemoteLaunchTargetProvider;
 
@@ -20,17 +19,11 @@ public class ESP8266LaunchTargetProvider extends RemoteLaunchTargetProvider {
 	}
 
 	@Override
-	public void init(ILaunchTargetManager targetManager) {
-		super.init(targetManager);
-
-		// Set the os and arch
-		// TODO the remote launch target provider should really do this
-		for (ILaunchTarget target : targetManager.getLaunchTargetsOfType(getTypeId())) {
-			ILaunchTargetWorkingCopy wc = target.getWorkingCopy();
-			wc.setAttribute(ILaunchTarget.ATTR_OS, ESP8266ToolChain.OS);
-			wc.setAttribute(ILaunchTarget.ATTR_ARCH, ESP8266ToolChain.ARCH);
-			wc.save();
-		}
+	protected void initLaunchTarget(ILaunchTarget target) {
+		ILaunchTargetWorkingCopy wc = target.getWorkingCopy();
+		wc.setAttribute(ILaunchTarget.ATTR_OS, ESP8266ToolChain.OS);
+		wc.setAttribute(ILaunchTarget.ATTR_ARCH, ESP8266ToolChain.ARCH);
+		wc.save();
 	}
-
+	
 }

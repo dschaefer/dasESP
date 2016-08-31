@@ -12,17 +12,17 @@
       </connectionType>
       <connectionService
             connectionTypeId="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
-            factory="org.eclipse.remote.serial.core.SerialPortConnection$Factory"
+            factory="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266SerialConnection$Factory"
             service="org.eclipse.remote.serial.core.ISerialPortService">
       </connectionService>
       <connectionService
             connectionTypeId="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
-            factory="org.eclipse.remote.serial.core.SerialPortConnection$Factory"
+            factory="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266SerialConnection$Factory"
             service="org.eclipse.remote.core.IRemoteCommandShellService">
       </connectionService>
       <connectionService
             connectionTypeId="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
-            factory="org.eclipse.remote.serial.core.SerialPortConnection$Factory"
+            factory="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266SerialConnection$Factory"
             service="org.eclipse.remote.core.IRemoteConnectionPropertyService">
       </connectionService>
    </extension>
