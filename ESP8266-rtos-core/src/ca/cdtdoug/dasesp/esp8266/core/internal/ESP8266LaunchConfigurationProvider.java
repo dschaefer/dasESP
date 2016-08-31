@@ -24,8 +24,8 @@ public class ESP8266LaunchConfigurationProvider extends AbstractLaunchConfigProv
 	@Override
 	public boolean supports(ILaunchDescriptor descriptor, ILaunchTarget target) throws CoreException {
 		// Make sure it's an ESP8266
-		if (!target.getAttribute(ILaunchTarget.ATTR_OS, "").equals(ESP8266ToolChainProvider.OS)
-				|| !target.getAttribute(ILaunchTarget.ATTR_ARCH, "").equals(ESP8266ToolChainProvider.ARCH)) {
+		if (!target.getAttribute(ILaunchTarget.ATTR_OS, "").equals(ESP8266ToolChain.OS)
+				|| !target.getAttribute(ILaunchTarget.ATTR_ARCH, "").equals(ESP8266ToolChain.ARCH)) {
 			return false;
 		}
 

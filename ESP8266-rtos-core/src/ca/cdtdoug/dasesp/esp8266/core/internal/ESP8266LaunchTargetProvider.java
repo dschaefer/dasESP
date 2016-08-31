@@ -27,8 +27,8 @@ public class ESP8266LaunchTargetProvider extends RemoteLaunchTargetProvider {
 		// TODO the remote launch target provider should really do this
 		for (ILaunchTarget target : targetManager.getLaunchTargetsOfType(getTypeId())) {
 			ILaunchTargetWorkingCopy wc = target.getWorkingCopy();
-			wc.setAttribute(ILaunchTarget.ATTR_OS, ESP8266ToolChainProvider.OS);
-			wc.setAttribute(ILaunchTarget.ATTR_ARCH, ESP8266ToolChainProvider.ARCH);
+			wc.setAttribute(ILaunchTarget.ATTR_OS, ESP8266ToolChain.OS);
+			wc.setAttribute(ILaunchTarget.ATTR_ARCH, ESP8266ToolChain.ARCH);
 			wc.save();
 		}
 	}

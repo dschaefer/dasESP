@@ -22,9 +22,6 @@ import org.eclipse.core.runtime.Platform;
 public class ESP8266ToolChainProvider implements IToolChainProvider {
 
 	public static final String ID = "ca.cdtdoug.dasESP.ESP8266.rtos.core.toolChainProvider";
-	public static final String TCID = "xtensa-lx106-elf";
-	public static final String OS = "RTOS";
-	public static final String ARCH = "ESP8266";
 
 	@Override
 	public String getId() {
@@ -36,13 +33,11 @@ public class ESP8266ToolChainProvider implements IToolChainProvider {
 		// Auto discover the toolchain in the eclipse directory
 		try {
 			Path sdkPath = Paths.get(Platform.getInstallLocation().getURL().toURI()).resolve("ESP8266_RTOS_SDK");
-			Path toolsPath = sdkPath.resolve("tools");
-			Path gccPath = toolsPath.resolve(TCID);
-			if (Files.exists(gccPath)) {
+			if (Files.exists(sdkPath.resolve("tools"))) {
 				try {
 					String version = sdkPath.toString();
-					if (manager.getToolChain(ID, TCID, version) == null) {
-						manager.addToolChain(newToolChain(sdkPath, toolsPath, gccPath));
+					if (manager.getToolChain(ID, ESP8266ToolChain.ID, version) == null) {
+						manager.addToolChain(new ESP8266ToolChain(this, sdkPath));
 					}
 				} catch (CoreException e) {
 					Activator.getDefault().getLog().log(e.getStatus());
@@ -57,28 +52,12 @@ public class ESP8266ToolChainProvider implements IToolChainProvider {
 	public IToolChain getToolChain(String id, String version) throws CoreException {
 		// Version is SDK path
 		Path sdkPath = Paths.get(version);
-		Path toolsPath = sdkPath.resolve("tools");
-		Path gccPath = toolsPath.resolve(TCID);
-		if (Files.exists(gccPath)) {
-			try {
-				return newToolChain(sdkPath, toolsPath, gccPath);
-			} catch (CoreException e) {
-				Activator.getDefault().getLog().log(e.getStatus());
-			}
+		if (Files.exists(sdkPath.resolve("tools"))) {
+			return new ESP8266ToolChain(this, sdkPath);
+		} else {
+			// Not found
+			return null;
 		}
-		
-		// Not found
-		return null;
-	}
-
-	private GCCToolChain newToolChain(Path sdkPath, Path toolsPath, Path gccPath) throws CoreException {
-		String version = sdkPath.toString();
-		GCCToolChain tc = new GCCToolChain(this, TCID, version, new Path[] {
-				toolsPath, gccPath.resolve("bin")
-		}, TCID + "-");
-		tc.setProperty(IToolChain.ATTR_OS, OS);
-		tc.setProperty(IToolChain.ATTR_ARCH, ARCH);
-		return tc;
 	}
 
 }

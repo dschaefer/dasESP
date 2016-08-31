@@ -27,8 +27,8 @@ public class ESP8266CMakeToolChainProvider implements ICMakeToolChainProvider, I
 	public void init(ICMakeToolChainManager manager) {
 		manager.addListener(this);
 		Map<String, String> properties = new HashMap<>();
-		properties.put(IToolChain.ATTR_OS, ESP8266ToolChainProvider.OS);
-		properties.put(IToolChain.ATTR_ARCH, ESP8266ToolChainProvider.ARCH);
+		properties.put(IToolChain.ATTR_OS, ESP8266ToolChain.OS);
+		properties.put(IToolChain.ATTR_ARCH, ESP8266ToolChain.ARCH);
 		for (ICMakeToolChainFile file : manager.getToolChainFilesMatching(properties)) {
 			addFile(file);
 		}
@@ -48,7 +48,7 @@ public class ESP8266CMakeToolChainProvider implements ICMakeToolChainProvider, I
 		String version = file.getPath().getParent().toString();
 		try {
 			// This will load up the toolchain
-			tcManager.getToolChain(ESP8266ToolChainProvider.ID, ESP8266ToolChainProvider.TCID, version);
+			tcManager.getToolChain(ESP8266ToolChainProvider.ID, ESP8266ToolChain.ID, version);
 		} catch (CoreException e) {
 			Activator.getDefault().getLog().log(e.getStatus());
 		}
