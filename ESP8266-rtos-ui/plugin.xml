@@ -15,6 +15,12 @@
             id="ca.cdtdoug.dasESP.ESP8266.rtos.core.serialConnectionType"
             labelProvider="ca.cdtdoug.dasesp.esp8266.rtos.ui.internal.ESP8266LabelProvider">
       </launchTargetTypeUI>
+      <wizard
+            class="ca.cdtdoug.dasesp.esp8266.rtos.ui.internal.NewESP8266ConnectionWizard"
+            icon="icons/esp16.png"
+            id="ca.cdtdoug.dasESP.ESP8266.rtos.ui.wizard1"
+            name="ESP8266">
+      </wizard>
    </extension>
 
 </plugin>

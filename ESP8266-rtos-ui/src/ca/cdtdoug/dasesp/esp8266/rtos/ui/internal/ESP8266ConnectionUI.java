@@ -12,7 +12,6 @@ import org.eclipse.remote.core.IRemoteConnectionType;
 import org.eclipse.remote.ui.AbstractRemoteUIConnectionService;
 import org.eclipse.remote.ui.IRemoteUIConnectionService;
 import org.eclipse.remote.ui.IRemoteUIConnectionWizard;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
 public class ESP8266ConnectionUI extends AbstractRemoteUIConnectionService {

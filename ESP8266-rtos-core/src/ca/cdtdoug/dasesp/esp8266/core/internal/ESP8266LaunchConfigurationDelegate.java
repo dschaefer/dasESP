@@ -113,6 +113,10 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 
 		command.add("-cp");
 		command.add(serialPort.getPortName());
+		command.add("-cd");
+		command.add("nodemcu");
+		// TODO baud rate
+
 		command.add("-cf");
 		command.add("eagle.flash.bin");
 		command.add("-ca");

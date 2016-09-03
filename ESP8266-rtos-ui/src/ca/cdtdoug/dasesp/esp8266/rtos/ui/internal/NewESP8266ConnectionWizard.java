@@ -7,20 +7,22 @@
  *******************************************************************************/
 package ca.cdtdoug.dasesp.esp8266.rtos.ui.internal;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.remote.core.IRemoteConnectionType;
-import org.eclipse.remote.core.IRemoteConnectionWorkingCopy;
 import org.eclipse.remote.serial.ui.NewSerialPortConnectionWizard;
-import org.eclipse.remote.serial.ui.NewSerialPortConnectionWizardPage;
 import org.eclipse.remote.ui.IRemoteUIConnectionWizard;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IWorkbench;
 
-public class NewESP8266ConnectionWizard extends NewSerialPortConnectionWizard implements IRemoteUIConnectionWizard {
-
-	private NewSerialPortConnectionWizardPage page;
-	private IRemoteConnectionWorkingCopy workingCopy;
+public class NewESP8266ConnectionWizard extends NewSerialPortConnectionWizard implements IRemoteUIConnectionWizard, INewWizard {
 
 	public NewESP8266ConnectionWizard(Shell shell, IRemoteConnectionType connectionType) {
 		super(shell, connectionType);
+	}
+
+	@Override
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
 
 }

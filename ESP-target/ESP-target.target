@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ESP-target" sequenceNumber="8">
+<?pde version="3.8"?><target name="ESP-target" sequenceNumber="11">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.cdt.sdk.feature.group" version="0.0.0"/>
@@ -11,18 +11,18 @@
 <repository location="http://download.eclipse.org/eclipse/updates/4.6/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.remote.feature.group" version="2.1.0.201605242106"/>
-<unit id="org.eclipse.remote.serial.feature.group" version="2.1.0.201605242106"/>
-<unit id="org.eclipse.remote.console.feature.group" version="2.1.0.201605242106"/>
+<unit id="org.eclipse.remote.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.remote.serial.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.remote.console.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/tools/ptp/updates/remote/2.1.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.tm.terminal.control.sdk.feature.feature.group" version="4.1.0.201606052351"/>
+<unit id="org.eclipse.tm.terminal.control.sdk.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/tm/terminal/updates/4.1milestones/20160605"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.launchbar.feature.group" version="2.0.1.201608240001"/>
-<unit id="org.eclipse.launchbar.remote.feature.group" version="1.0.0.201608240001"/>
+<unit id="org.eclipse.launchbar.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.launchbar.remote.feature.group" version="0.0.0"/>
 <repository location="https://hudson.eclipse.org/cdt/job/launchbar-master/lastSuccessfulBuild/artifact/repo/target/repository/"/>
 </location>
 </locations>

@@ -27,11 +27,7 @@ public class ESP8266LabelProvider extends LabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
-		if (element instanceof ILaunchTarget || element instanceof IRemoteConnection) {
-			return Activator.getDefault().getImageRegistry().get(Activator.IMG_ESPLOGO);
-		} else {
-			return super.getImage(element);
-		}
+		return Activator.getDefault().getImageRegistry().get(Activator.IMG_ESPLOGO);
 	}
 
 }
