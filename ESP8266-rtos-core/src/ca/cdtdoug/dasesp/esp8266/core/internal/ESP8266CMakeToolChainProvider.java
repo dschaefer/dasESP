@@ -7,6 +7,9 @@
  *******************************************************************************/
 package ca.cdtdoug.dasesp.esp8266.core.internal;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,15 +25,25 @@ import org.eclipse.core.runtime.CoreException;
 public class ESP8266CMakeToolChainProvider implements ICMakeToolChainProvider, ICMakeToolChainListener {
 
 	IToolChainManager tcManager = Activator.getService(IToolChainManager.class);
-	
+
 	@Override
 	public void init(ICMakeToolChainManager manager) {
 		manager.addListener(this);
 		Map<String, String> properties = new HashMap<>();
 		properties.put(IToolChain.ATTR_OS, ESP8266ToolChain.OS);
 		properties.put(IToolChain.ATTR_ARCH, ESP8266ToolChain.ARCH);
-		for (ICMakeToolChainFile file : manager.getToolChainFilesMatching(properties)) {
-			addFile(file);
+		try {
+			for (IToolChain tc : tcManager.getToolChainsMatching(properties)) {
+				Path toolChainFile = Paths.get(tc.getVersion()).resolve("toolchain.cmake");
+				if (Files.exists(toolChainFile)) {
+					ICMakeToolChainFile file = manager.newToolChainFile(toolChainFile);
+					file.setProperty(IToolChain.ATTR_OS, ESP8266ToolChain.OS);
+					file.setProperty(IToolChain.ATTR_ARCH, ESP8266ToolChain.ARCH);
+					manager.addToolChainFile(file);
+				}
+			}
+		} catch (CoreException e) {
+			Activator.getDefault().getLog().log(e.getStatus());
 		}
 	}
 

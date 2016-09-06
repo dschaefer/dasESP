@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.eclipse.cdt.build.gcc.core.GCCToolChain;
 import org.eclipse.cdt.core.build.IToolChain;
 import org.eclipse.cdt.core.build.IToolChainManager;
 import org.eclipse.cdt.core.build.IToolChainProvider;
@@ -42,7 +41,7 @@ public class ESP8266ToolChainProvider implements IToolChainProvider {
 				} catch (CoreException e) {
 					Activator.getDefault().getLog().log(e.getStatus());
 				}
-			}			
+			}
 		} catch (URISyntaxException e) {
 			Activator.getDefault().getLog().log(Activator.getStatus(e));
 		}

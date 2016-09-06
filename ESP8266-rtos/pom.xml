@@ -11,49 +11,4 @@
 	<artifactId>ca.cdtdoug.dasESP.ESP8266.rtos</artifactId>
 	<version>1.4.0-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
-
-	<profiles>
-		<profile>
-			<id>fetch-sdk</id>
-			<activation>
-				<file>
-					<missing>tarfiles</missing>
-				</file>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.8</version>
-						<executions>
-							<execution>
-								<id>fetch-sdk</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<property name="sdkVersion" value="1.4.0" />
-										<property name="sdkArchive" value="v${sdkVersion}.tar.gz" />
-
-										<get
-											src="https://github.com/espressif/ESP8266_RTOS_SDK/archive/${sdkArchive}"
-											dest="." />
-										<untar src="${sdkArchive}" dest="tarfiles" compression="gzip" />
-										<move file="tarfiles/ESP8266_RTOS_SDK-${sdkVersion}"
-											tofile="tarfiles/ESP8266_RTOS_SDK" />
-										<delete file="tarfiles/pax_global_header" failonerror="false" />
-										<get
-											src="https://github.com/esp8266/esp8266-wiki/raw/master/libs/libhal.a"
-											dest="tarfiles/ESP8266_RTOS_SDK/lib" />
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
