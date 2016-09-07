@@ -62,18 +62,3 @@ link_libraries(
 	-lwpa
 	-lwps
 )
-
-macro(add_esp8266_binary_target exe_target flash_size)
-	set_target_properties(${exe_target} PROPERTIES LINK_FLAGS -T${ESP8266_LD_SCRIPTS_DIR}/eagle.app.v6.ld)
-
-	add_custom_target(
-	    ${exe_target}_binary ALL
-    	COMMAND ${ESP8266_ESPTOOL} -bz ${flash_size}K
-		-eo $<TARGET_FILE:${exe_target}> -bo firmware.boot.bin -bs .text -bs .data -bs .rodata -bc -ec
-    	-eo $<TARGET_FILE:${exe_target}> -es .irom0.text firmware.irom0.txt.bin -ec
-	)
-
-	set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "firmware.boot.bin;firmware.irom0.txt.bin")
-
-	add_dependencies(${exe_target}_binary ${exe_target})
-endmacro(add_esp8266_binary_target exe_target flash_size)
