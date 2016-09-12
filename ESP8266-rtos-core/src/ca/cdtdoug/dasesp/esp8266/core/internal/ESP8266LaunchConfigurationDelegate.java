@@ -20,6 +20,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -32,7 +34,7 @@ import org.eclipse.remote.serial.core.ISerialPortService;
 
 public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTargetedDelegate {
 
-	public static final String TYPE_ID = "ca.cdtdoug.dasESP.ESP8266.rtos.core.launchConfigurationType";
+	public static final String TYPE_ID = "ca.cdtdoug.dasESP.ESP8266.rtos.core.launchConfigurationType"; //$NON-NLS-1$
 
 	private ICBuildConfigurationManager configManager = Activator.getService(ICBuildConfigurationManager.class);
 	private IToolChainManager tcManager = Activator.getService(IToolChainManager.class);
@@ -56,6 +58,8 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 			IProjectDescription desc = project.getDescription();
 			desc.setActiveBuildConfig(buildConfig.getBuildConfiguration().getName());
 			project.setDescription(desc, monitor);
+		} else {
+			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No Build Configuration found."));
 		}
 
 		// proceed with the build
@@ -75,54 +79,57 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 		IBinary elfFile = null;
 		for (IBinary binary : binaries) {
 			// take the first one for now
-			if (binary.getPath().getFileExtension().equals("elf")) {
+			if (binary.getPath().getFileExtension().equals("elf")) { //$NON-NLS-1$
 				elfFile = binary;
 				break;
 			}
 		}
+		if (elfFile == null) {
+			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No binaries found"));
+		}
 		Path elfPath = Paths.get(elfFile.getLocationURI());
 
 		IToolChain toolChain = buildConfig.getToolChain();
-		Path esptool = toolChain.getCommandPath(Paths.get("esptool"));
+		Path esptool = toolChain.getCommandPath(Paths.get("esptool")); //$NON-NLS-1$
 
 		List<String> command = new ArrayList<>();
 		command.add(esptool.toString());
 
-		command.add("-bz");
-		command.add("512K");
+		command.add("-bz"); //$NON-NLS-1$
+		command.add("512K"); //$NON-NLS-1$
 
-		command.add("-eo");
+		command.add("-eo"); //$NON-NLS-1$
 		command.add(elfPath.getFileName().toString());
-		command.add("-bo");
-		command.add("eagle.flash.bin");
-		command.add("-bs");
-		command.add(".text");
-		command.add("-bs");
-		command.add(".data");
-		command.add("-bs");
-		command.add(".rodata");
-		command.add("-bc");
-		command.add("-ec");
+		command.add("-bo"); //$NON-NLS-1$
+		command.add("eagle.flash.bin"); //$NON-NLS-1$
+		command.add("-bs"); //$NON-NLS-1$
+		command.add(".text"); //$NON-NLS-1$
+		command.add("-bs"); //$NON-NLS-1$
+		command.add(".data"); //$NON-NLS-1$
+		command.add("-bs"); //$NON-NLS-1$
+		command.add(".rodata"); //$NON-NLS-1$
+		command.add("-bc"); //$NON-NLS-1$
+		command.add("-ec"); //$NON-NLS-1$
 
-		command.add("-eo");
+		command.add("-eo"); //$NON-NLS-1$
 		command.add(elfPath.getFileName().toString());
-		command.add("-es");
-		command.add(".irom0.text");
-		command.add("eagle.irom0text.bin");
-		command.add("-ec");
+		command.add("-es"); //$NON-NLS-1$
+		command.add(".irom0.text"); //$NON-NLS-1$
+		command.add("eagle.irom0text.bin"); //$NON-NLS-1$
+		command.add("-ec"); //$NON-NLS-1$
 
-		command.add("-cp");
+		command.add("-cp"); //$NON-NLS-1$
 		command.add(serialPort.getPortName());
-		command.add("-cd");
-		command.add("nodemcu");
+		command.add("-cd"); //$NON-NLS-1$
+		command.add("nodemcu"); //$NON-NLS-1$
 		// TODO baud rate
 
-		command.add("-cf");
-		command.add("eagle.flash.bin");
-		command.add("-ca");
-		command.add("0x20000");
-		command.add("-cf");
-		command.add("eagle.irom0text.bin");
+		command.add("-cf"); //$NON-NLS-1$
+		command.add("eagle.flash.bin"); //$NON-NLS-1$
+		command.add("-ca"); //$NON-NLS-1$
+		command.add("0x20000"); //$NON-NLS-1$
+		command.add("-cf"); //$NON-NLS-1$
+		command.add("eagle.irom0text.bin"); //$NON-NLS-1$
 		
 		StringBuilder cmdStr = new StringBuilder(command.get(0));
 		for (int i = 1; i < command.size(); ++i) {
@@ -154,14 +161,8 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 			IProgressMonitor monitor) throws CoreException {
 		// Set active build config based on toolchain for target
 		Map<String, String> properties = new HashMap<>();
-		String os = target.getAttribute(ILaunchTarget.ATTR_OS, ""); //$NON-NLS-1$
-		if (!os.isEmpty()) {
-			properties.put(IToolChain.ATTR_OS, os);
-		}
-		String arch = target.getAttribute(ILaunchTarget.ATTR_ARCH, ""); //$NON-NLS-1$
-		if (!arch.isEmpty()) {
-			properties.put(IToolChain.ATTR_ARCH, arch);
-		}
+		properties.put(IToolChain.ATTR_OS, ESP8266ToolChain.OS);
+		properties.put(IToolChain.ATTR_ARCH, ESP8266ToolChain.ARCH);
 		Collection<IToolChain> tcs = tcManager.getToolChainsMatching(properties);
 		if (!tcs.isEmpty()) {
 			IToolChain toolChain = tcs.iterator().next();

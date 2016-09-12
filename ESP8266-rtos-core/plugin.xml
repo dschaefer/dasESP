@@ -59,7 +59,7 @@
          point="org.eclipse.launchbar.core.launchBarContributions">
       <configProvider
             class="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266LaunchConfigurationProvider"
-            descriptorType="org.eclipse.cdt.cmake.core.descriptorType"
+            descriptorType="org.eclipse.cdt.debug.core.coreBuildDescriptorType"
             priority="10">
       </configProvider>
    </extension>

@@ -34,7 +34,7 @@ public class ESP8266CMakeToolChainProvider implements ICMakeToolChainProvider, I
 		properties.put(IToolChain.ATTR_ARCH, ESP8266ToolChain.ARCH);
 		try {
 			for (IToolChain tc : tcManager.getToolChainsMatching(properties)) {
-				Path toolChainFile = Paths.get(tc.getVersion()).resolve("toolchain.cmake");
+				Path toolChainFile = Paths.get(tc.getVersion()).resolve("toolchain.cmake"); //$NON-NLS-1$
 				if (Files.exists(toolChainFile)) {
 					ICMakeToolChainFile file = manager.newToolChainFile(toolChainFile);
 					file.setProperty(IToolChain.ATTR_OS, ESP8266ToolChain.OS);
@@ -52,18 +52,14 @@ public class ESP8266CMakeToolChainProvider implements ICMakeToolChainProvider, I
 		switch (event.getType()) {
 		case CMakeToolChainEvent.ADDED:
 			ICMakeToolChainFile file = event.getToolChainFile();
-			addFile(file);
+			String version = file.getPath().getParent().toString();
+			try {
+				// This will load up the toolchain
+				tcManager.getToolChain(ESP8266ToolChainProvider.ID, ESP8266ToolChain.ID, version);
+			} catch (CoreException e) {
+				Activator.getDefault().getLog().log(e.getStatus());
+			}
 			break;
-		}
-	}
-
-	private void addFile(ICMakeToolChainFile file) {
-		String version = file.getPath().getParent().toString();
-		try {
-			// This will load up the toolchain
-			tcManager.getToolChain(ESP8266ToolChainProvider.ID, ESP8266ToolChain.ID, version);
-		} catch (CoreException e) {
-			Activator.getDefault().getLog().log(e.getStatus());
 		}
 	}
 

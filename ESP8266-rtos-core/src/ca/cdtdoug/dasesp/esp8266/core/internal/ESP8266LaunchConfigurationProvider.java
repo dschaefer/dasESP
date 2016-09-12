@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.cdt.core.build.ICBuildConfigurationManager;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -18,25 +17,16 @@ import org.eclipse.launchbar.core.target.ILaunchTarget;
 
 public class ESP8266LaunchConfigurationProvider extends AbstractLaunchConfigProvider {
 
-	private final ICBuildConfigurationManager configManager = Activator.getService(ICBuildConfigurationManager.class);
 	private Map<IProject, ILaunchConfiguration> configs = new HashMap<>();
 
 	@Override
 	public boolean supports(ILaunchDescriptor descriptor, ILaunchTarget target) throws CoreException {
 		// Make sure it's an ESP8266
-		if (!target.getAttribute(ILaunchTarget.ATTR_OS, "").equals(ESP8266ToolChain.OS)
-				|| !target.getAttribute(ILaunchTarget.ATTR_ARCH, "").equals(ESP8266ToolChain.ARCH)) {
-			return false;
+		if (target.getAttribute(ILaunchTarget.ATTR_OS, "").equals(ESP8266ToolChain.OS) //$NON-NLS-1$
+				&& target.getAttribute(ILaunchTarget.ATTR_ARCH, "").equals(ESP8266ToolChain.ARCH)) { //$NON-NLS-1$
+			return true;
 		}
-
-		// Make sure it's a new style build
-		IProject project = descriptor.getAdapter(IProject.class);
-		if (project != null) {
-			return configManager.supports(project);
-		} else {
-			// No project, bad descriptor?
-			return false;
-		}
+		return false;
 	}
 
 	@Override
