@@ -55,7 +55,9 @@ public class ESP8266CMakeToolChainProvider implements ICMakeToolChainProvider, I
 			String version = file.getPath().getParent().toString();
 			try {
 				// This will load up the toolchain
-				tcManager.getToolChain(ESP8266ToolChainProvider.ID, ESP8266ToolChain.ID, version);
+				IToolChain toolChain = tcManager.getToolChain(ESP8266ToolChainProvider.ID, ESP8266ToolChain.ID,
+						version);
+				assert toolChain != null;
 			} catch (CoreException e) {
 				Activator.getDefault().getLog().log(e.getStatus());
 			}

@@ -168,7 +168,8 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 			IToolChain toolChain = tcs.iterator().next();
 			return configManager.getBuildConfiguration(project, toolChain, "run", monitor); //$NON-NLS-1$
 		} else {
-			return null;
+			throw new CoreException(
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No matching toolchain found for target."));
 		}
 	}
 
