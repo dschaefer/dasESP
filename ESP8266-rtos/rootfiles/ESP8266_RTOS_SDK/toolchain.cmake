@@ -19,10 +19,6 @@ set(CMAKE_CXX_LINK_EXECUTABLE "<CMAKE_CXX_COMPILER> <LINK_FLAGS> -Wl,--start-gro
 set(CMAKE_RANLIB ${gccPath}/bin/xtensa-lx106-elf-ranlib CACHE PATH "xtensa lx106 ranlib Program" FORCE)
 set(CMAKE_AR ${gccPath}/bin/xtensa-lx106-elf-ar CACHE PATH "xtensa lx106 qr Program" FORCE)
 
-set(ESP8266_ESPTOOL ${CMAKE_CURRENT_LIST_DIR}/tools/esptool CACHE PATH "esptool path")
-
-set(ESP8266_LD_SCRIPTS_DIR ${CMAKE_CURRENT_LIST_DIR}/ld CACHE PATH "linker script dir")
-
 include_directories(SYSTEM
 	"${CMAKE_CURRENT_LIST_DIR}/include" 
 	"${CMAKE_CURRENT_LIST_DIR}/extra_include"
