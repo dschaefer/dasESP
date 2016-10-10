@@ -96,7 +96,7 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 		command.add(esptool.toString());
 
 		command.add("-bz"); //$NON-NLS-1$
-		command.add("512K"); //$NON-NLS-1$
+		command.add("4M"); //$NON-NLS-1$
 
 		command.add("-eo"); //$NON-NLS-1$
 		command.add(elfPath.getFileName().toString());
@@ -120,9 +120,11 @@ public class ESP8266LaunchConfigurationDelegate extends LaunchConfigurationTarge
 
 		command.add("-cp"); //$NON-NLS-1$
 		command.add(serialPort.getPortName());
+		// TODO baud rate
+		command.add("-cb"); //$NON-NLS-1$
+		command.add("921600"); //$NON-NLS-1$
 		command.add("-cd"); //$NON-NLS-1$
 		command.add("nodemcu"); //$NON-NLS-1$
-		// TODO baud rate
 
 		command.add("-cf"); //$NON-NLS-1$
 		command.add("eagle.flash.bin"); //$NON-NLS-1$

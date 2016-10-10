@@ -52,7 +52,8 @@
             delegate="ca.cdtdoug.dasesp.esp8266.core.internal.ESP8266LaunchConfigurationDelegate"
             id="ca.cdtdoug.dasESP.ESP8266.rtos.core.launchConfigurationType"
             modes="run"
-            name="ESP8266">
+            name="ESP8266"
+            public="false">
       </launchConfigurationType>
    </extension>
    <extension

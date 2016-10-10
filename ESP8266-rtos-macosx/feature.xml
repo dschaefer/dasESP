@@ -2,7 +2,7 @@
 <feature
       id="ca.cdtdoug.dasESP.ESP8266.rtos.macosx"
       label="ESP8266 RTOS Tools MacOSX"
-      version="1.0.0"
+      version="1.0.0.6"
       os="macosx">
 
    <description url="http://www.example.com/description">

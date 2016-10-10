@@ -2,7 +2,7 @@
 <feature
       id="ca.cdtdoug.dasESP.ESP8266.rtos.sdk"
       label="ESP8266 RTOS SDK"
-      version="1.4.0.0">
+      version="1.4.0.1">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

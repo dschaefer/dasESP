@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>ca.cdtdoug.dasESP.ESP8266.rtos.macosx</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0.6</version>
 	<packaging>eclipse-feature</packaging>
 
 	<profiles>

@@ -1,0 +1,2 @@
+instructions.configure = \
+org.eclipse.equinox.p2.touchpoint.natives.ln(targetDir:${installFolder}/ESP8266_RTOS_SDK/tools/xtensa-lx106-elf/libexec/gcc/xtensa-lx106-elf/6.2.0/,linkName:liblto_plugin.so,linkTarget:liblto_plugin.0.so,force:true);
