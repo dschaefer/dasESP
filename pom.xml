@@ -7,13 +7,13 @@
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>0.26.0</tycho-version>
+		<esptoolVersion>0.4.11</esptoolVersion>
 	</properties>
 	<modules>
 		<module>dasESP-repo</module>
 		<module>dasESP-target</module>
+		<module>dasESP-install</module>
 		<module>ESP8266-rtos</module>
-		<module>ESP8266-rtos-sdk</module>
-		<module>ESP8266-rtos-macosx</module>
  		<module>ESP8266-rtos-core</module>
 		<module>ESP8266-rtos-ui</module>
 	</modules>

@@ -2,28 +2,26 @@
 <?pde version="3.8"?><target name="ESP-target" sequenceNumber="11">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.apache.commons.compress" version="0.0.0"/>
 <unit id="org.eclipse.cdt.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.cdt.cmake.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/cdt/builds/9.1/nightly/"/>
+<unit id="org.eclipse.remote.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.remote.serial.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.remote.console.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.launchbar.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.launchbar.remote.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/neon/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.6/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.remote.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.remote.serial.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.remote.console.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/ptp/updates/remote/2.1.0"/>
+<unit id="org.eclipse.cdt.cmake.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/tools/cdt/releases/9.1"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.tm.terminal.control.sdk.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/tm/terminal/updates/4.1milestones/20160605"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.launchbar.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.launchbar.remote.feature.group" version="0.0.0"/>
-<repository location="https://hudson.eclipse.org/cdt/job/launchbar-master/lastSuccessfulBuild/artifact/repo/target/repository/"/>
 </location>
 </locations>
 </target>

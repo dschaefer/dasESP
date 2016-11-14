@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <category-def name="esp" label="ESP8266/32 Tools"/>
    <feature id="ca.cdtdoug.dasESP.ESP8266.rtos">
       <category name="esp"/>
    </feature>
+   <bundle id="ca.cdtdoug.dasESP.install"/>
+   <bundle id="org.apache.commons.compress"/>
+   <category-def name="esp" label="ESP8266/ESP32 Tools"/>
 </site>
