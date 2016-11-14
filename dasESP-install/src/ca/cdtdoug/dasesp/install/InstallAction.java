@@ -2,11 +2,14 @@ package ca.cdtdoug.dasesp.install;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,15 +22,20 @@ import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.p2.engine.spi.ProvisioningAction;
 
 /**
  * Install action. Parameters:
  *     url:   source URL for the package to download
+ *     name:  archive name
  *     dest:  destination folder to unpack to
+ *     size:  size of the package
  *     compression: tar.gz, tar.bz2, or zip
  *     strip: number of directories to strip from source
  *     os:    OS this package is for, ignore if not
@@ -53,8 +61,17 @@ public class InstallAction extends ProvisioningAction {
 			return fail("parameter 'url' is missing.");
 		}
 
-		String compression = (String) parameters.get("compression");
-		if (compression == null) {
+		String nameString = (String) parameters.get("name");
+		String name;
+		if (nameString == null) {
+			name = urlString.substring(urlString.lastIndexOf('/') + 1);
+		} else {
+			name = nameString;
+		}
+
+		String compressionString = (String) parameters.get("compression");
+		String compression;
+		if (compressionString == null) {
 			if (urlString.endsWith(".tar.gz") | urlString.endsWith(".tgz")) {
 				compression = "tar.gz";
 			} else if (urlString.endsWith(".tar.bz2")) {
@@ -64,6 +81,8 @@ public class InstallAction extends ProvisioningAction {
 			} else {
 				return fail("Unknown archive type: " + urlString);
 			}
+		} else {
+			compression = compressionString;
 		}
 
 		String destString = (String) parameters.get("dest");
@@ -73,59 +92,143 @@ public class InstallAction extends ProvisioningAction {
 		Path dest = Paths.get(destString);
 
 		String stripString = (String) parameters.get("strip");
-		int strip = 0;
+		int strip;
 		if (stripString != null) {
 			try {
 				strip = Integer.parseInt(stripString);
 			} catch (NumberFormatException e) {
 				return fail("Bad strip number", e);
 			}
+		} else {
+			strip = 0;
 		}
 
-		try {
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
-			try (ArchiveInputStream in = getArchive(connection, compression)) {
-				if (!Files.exists(dest)) {
-					Files.createDirectories(dest);
-				}
+		String sizeString = (String) parameters.get("size");
+		int size;
+		if (sizeString != null) {
+			try {
+				size = Integer.parseInt(sizeString);
+			} catch (NumberFormatException e) {
+				return fail("Bad size number", e);
+			}
+		} else {
+			size = -1;
+		}
 
-				for (ArchiveEntry entry = in.getNextEntry(); entry != null; entry = in.getNextEntry()) {
-					Path entryPath = Paths.get(entry.getName());
-					if (strip > 0) {
-						if (entryPath.getNameCount() > strip) {
-							entryPath = entryPath.subpath(strip, entryPath.getNameCount());
-						} else {
-							continue;
+		Job job = new Job("Package Install") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					int work = size >= 0 ? size / 1024 * 2 : 2;
+					SubMonitor submon = SubMonitor.convert(monitor, work);
+
+					Path cacheDir = dest.resolve(".cache");
+					Files.createDirectories(cacheDir);
+					Path cachePath = cacheDir.resolve(name);
+
+					// Download
+					submon.setTaskName("Downloading " + name);
+
+					for (int retries = 5; retries > 0; retries--) {
+						try {
+							URLConnection connection = new URL(urlString).openConnection();
+							try (InputStream in = connection.getInputStream()) {
+								if (size < 0) {
+									// Just copy it in one go
+									Files.copy(in, cachePath, StandardCopyOption.REPLACE_EXISTING);
+								} else {
+									int progress = 0, read = 0;
+									Files.deleteIfExists(cachePath);
+									try (OutputStream out = Files.newOutputStream(cachePath,
+											StandardOpenOption.CREATE_NEW,
+											StandardOpenOption.WRITE)) {
+										byte[] buffer = new byte[0x2000];
+										int n;
+										while ((n = in.read(buffer)) > 0) {
+											out.write(buffer, 0, n);
+											read += n;
+											while (read / 1024 > progress) {
+												submon.worked(1);
+												progress++;
+											}
+										}
+									}
+								}
+							}
+							break;
+						} catch (IOException e) {
+							fail(String.format("downloading %s %s", urlString, retries > 1 ? "retrying" : ""), e);
+							submon.setWorkRemaining(0);
 						}
 					}
-					Path destPath = dest.resolve(entryPath);
 
-					if (entry.isDirectory()) {
-						Files.createDirectories(destPath);
-						continue;
+					if (size < 0) {
+						submon.worked(1);
 					}
+					submon.setTaskName("Extracting " + name);
+					int progress = 0;
 
-					if (entry instanceof TarArchiveEntry) {
-						TarArchiveEntry tarEntry = (TarArchiveEntry) entry;
+					try (ArchiveInputStream in = getArchive(cachePath, compression)) {
+						if (!Files.exists(dest)) {
+							Files.createDirectories(dest);
+						}
 
-						if (tarEntry.isSymbolicLink()) {
-							Path targetPath = Paths.get(tarEntry.getLinkName());
-							Files.createSymbolicLink(destPath, targetPath);
-							continue;
+						for (ArchiveEntry entry = in.getNextEntry(); entry != null; entry = in.getNextEntry()) {
+							Path entryPath = Paths.get(entry.getName());
+							if (strip > 0) {
+								if (entryPath.getNameCount() > strip) {
+									entryPath = entryPath.subpath(strip, entryPath.getNameCount());
+								} else {
+									continue;
+								}
+							}
+							Path destPath = dest.resolve(entryPath);
+
+							if (entry.isDirectory()) {
+								Files.createDirectories(destPath);
+								continue;
+							}
+
+							if (entry instanceof TarArchiveEntry) {
+								TarArchiveEntry tarEntry = (TarArchiveEntry) entry;
+
+								if (tarEntry.isSymbolicLink()) {
+									Path targetPath = Paths.get(tarEntry.getLinkName());
+									Files.createSymbolicLink(destPath, targetPath);
+									continue;
+								}
+							}
+
+							Files.copy(in, destPath, StandardCopyOption.REPLACE_EXISTING);
+
+							if (entry instanceof TarArchiveEntry) {
+								int mode = ((TarArchiveEntry) entry).getMode();
+								setMode(destPath, mode);
+							}
+
+							if (size >= 0) {
+								while (in.getBytesRead() / 1024 > progress) {
+									submon.worked(1);
+									progress++;
+								}
+							}
 						}
 					}
 
-					Files.copy(in, destPath);
+					submon.done();
+					submon.done();
 
-					if (entry instanceof TarArchiveEntry) {
-						int mode = ((TarArchiveEntry) entry).getMode();
-						setMode(destPath, mode);
-					}
+					return Status.OK_STATUS;
+				} catch (IOException e) {
+					return fail("Install failed", e);
 				}
 			}
-		} catch (IOException e) {
-			return fail("Install failed", e);
+		};
+		job.schedule();
+		try {
+			job.join();
+		} catch (InterruptedException e) {
+			return fail("Install job interrupted", e);
 		}
 
 		return Status.OK_STATUS;
@@ -164,8 +267,8 @@ public class InstallAction extends ProvisioningAction {
 		Files.setPosixFilePermissions(path, perms);
 	}
 
-	private ArchiveInputStream getArchive(URLConnection connection, String compression) throws IOException {
-		InputStream in = connection.getInputStream();
+	private ArchiveInputStream getArchive(Path archivePath, String compression) throws IOException {
+		InputStream in = Files.newInputStream(archivePath, StandardOpenOption.READ);
 		switch (compression) {
 		case "tar.gz": //$NON-NLS-1$
 			GzipCompressorInputStream gzipIn = new GzipCompressorInputStream(in);
