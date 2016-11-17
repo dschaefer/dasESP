@@ -16,7 +16,6 @@ import org.eclipse.equinox.p2.engine.spi.ProvisioningAction;
  * Get action gets a single file:
  *    url:  source url
  *    dest: destination file location
- *
  */
 public class GetAction extends ProvisioningAction {
 

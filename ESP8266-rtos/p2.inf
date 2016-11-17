@@ -3,6 +3,7 @@ metaRequirements.0.name=ca.cdtdoug.dasESP.install
 metaRequirements.0.range=[1,2)
 
 instructions.install.import=ca.cdtdoug.dasESP.install.install,ca.cdtdoug.dasESP.install.get
+instructions.uninstall.import=ca.cdtdoug.dasESP.install.remove
 
 instructions.install=\
 install(url:https://github.com/espressif/ESP8266_RTOS_SDK/archive/v1.4.0.tar.gz,\
@@ -21,3 +22,5 @@ install(url:https://github.com/igrr/esptool-ck/releases/download/0.4.11/esptool-
 	dest:${installFolder}/ESP8266_RTOS_SDK/tools, strip:1, size:30061, os:macosx, arch:x86_64);\
 install(url:https://github.com/igrr/esptool-ck/releases/download/0.4.11/esptool-0.4.11-win32.zip,\
 	dest:${installFolder}/ESP8266_RTOS_SDK/tools, strip:1, size:32953, os:win32);
+
+instructions.uninstall=remove(path:${installFolder}/ESP8266_RTOS_SDK);
