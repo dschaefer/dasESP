@@ -5,7 +5,15 @@
          point="org.eclipse.equinox.p2.engine.actions">
       <action
             class="ca.cdtdoug.dasesp.install.InstallAction"
-            name="Install"
+            name="install"
+            version="1.0.0">
+      </action>
+   </extension>
+   <extension
+         point="org.eclipse.equinox.p2.engine.actions">
+      <action
+            class="ca.cdtdoug.dasesp.install.GetAction"
+            name="get"
             version="1.0.0">
       </action>
    </extension>

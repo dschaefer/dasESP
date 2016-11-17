@@ -194,6 +194,7 @@ public class InstallAction extends ProvisioningAction {
 
 								if (tarEntry.isSymbolicLink()) {
 									Path targetPath = Paths.get(tarEntry.getLinkName());
+									Files.deleteIfExists(destPath);
 									Files.createSymbolicLink(destPath, targetPath);
 									continue;
 								}
@@ -215,7 +216,6 @@ public class InstallAction extends ProvisioningAction {
 						}
 					}
 
-					submon.done();
 					submon.done();
 
 					return Status.OK_STATUS;

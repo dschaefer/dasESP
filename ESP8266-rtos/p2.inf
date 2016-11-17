@@ -2,16 +2,22 @@ metaRequirements.0.namespace=org.eclipse.equinox.p2.iu
 metaRequirements.0.name=ca.cdtdoug.dasESP.install
 metaRequirements.0.range=[1,2)
 
-instructions.install.import=ca.cdtdoug.dasESP.install.Install
+instructions.install.import=ca.cdtdoug.dasESP.install.install,ca.cdtdoug.dasESP.install.get
 
 instructions.install=\
-Install(url:https://github.com/espressif/ESP8266_RTOS_SDK/archive/master.zip,\
+install(url:https://github.com/espressif/ESP8266_RTOS_SDK/archive/v1.4.0.tar.gz,\
 	dest:${installFolder}/ESP8266_RTOS_SDK, strip:1, size:6462852);\
-Install(url:http://arduino.esp8266.com/osx-xtensa-lx106-elf-gb404fb9-2.tar.gz,\
+install(url:https://github.com/esp8266/esp8266-wiki/raw/master/include.tgz,\
+	dest:${installFolder}/ESP8266_RTOS_SDK, size:979111);\
+get(url:https://github.com/esp8266/esp8266-wiki/raw/master/libs/libc.a,\
+	dest:${installFolder}/ESP8266_RTOS_SDK/lib/libc.a);\
+get(url:https://github.com/esp8266/esp8266-wiki/raw/master/libs/libhal.a,\
+	dest:${installFolder}/ESP8266_RTOS_SDK/lib/libhal.a);\
+install(url:http://arduino.esp8266.com/osx-xtensa-lx106-elf-gb404fb9-2.tar.gz,\
 	dest:${installFolder}/ESP8266_RTOS_SDK/tools, size:35385382, os:macosx, arch:x86_64);\
-Install(url:http://arduino.esp8266.com/win32-xtensa-lx106-elf-gb404fb9-2.tar.gz,\
+install(url:http://arduino.esp8266.com/win32-xtensa-lx106-elf-gb404fb9-2.tar.gz,\
 	dest:${installFolder}/ESP8266_RTOS_SDK/tools, size:153527527, os:win32);\
-Install(url:https://github.com/igrr/esptool-ck/releases/download/0.4.11/esptool-0.4.11-osx.tar.gz,\
+install(url:https://github.com/igrr/esptool-ck/releases/download/0.4.11/esptool-0.4.11-osx.tar.gz,\
 	dest:${installFolder}/ESP8266_RTOS_SDK/tools, strip:1, size:30061, os:macosx, arch:x86_64);\
-Install(url:https://github.com/igrr/esptool-ck/releases/download/0.4.11/esptool-0.4.11-win32.zip,\
+install(url:https://github.com/igrr/esptool-ck/releases/download/0.4.11/esptool-0.4.11-win32.zip,\
 	dest:${installFolder}/ESP8266_RTOS_SDK/tools, strip:1, size:32953, os:win32);
